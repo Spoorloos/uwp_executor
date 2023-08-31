@@ -7,15 +7,14 @@
 
 namespace Offsets { // Version: 2.590.678.0
 	// Function offsets:
-	constexpr uintptr_t get_scheduler = 0x7D15B0;
-	constexpr uintptr_t get_state = 0x47F1C0;
-	constexpr uintptr_t identity_flag = 0x2E3EF24;
-	constexpr uintptr_t luavm_load = 0x580FE0;
-	constexpr uintptr_t task_spawn = 0x580270;
-	constexpr uintptr_t print = 0xD8A5C0;
+	constexpr uintptr_t get_scheduler = 0x7AAAA0;
+	constexpr uintptr_t get_state = 0x4555F0;
+	constexpr uintptr_t luavm_load = 0x554E90;
+	constexpr uintptr_t task_spawn = 0x554030;
+	constexpr uintptr_t print = 0xD71B20;
 
 	// Other offsets:
-	constexpr int16_t top = 20/*, base = 8*/;
+	constexpr int16_t top = 12/*, base = 16*/;
 	constexpr int16_t extra_space = 72, identity = 24;
 }
 
