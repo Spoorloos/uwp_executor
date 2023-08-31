@@ -6,9 +6,6 @@
 
 void entry() noexcept {
     try {
-        // Disable the new identity system.
-		*reinterpret_cast<bool*>(Roblox::base + Offsets::identity_flag) = false;
-        
         // Execute script(s).
         Execution::execute_script("printidentity()");
     } catch (const std::exception& error) {
