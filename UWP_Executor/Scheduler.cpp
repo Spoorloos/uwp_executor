@@ -17,7 +17,7 @@ uintptr_t Scheduler::get_job(const char* job_name) noexcept {
 		const auto job = *reinterpret_cast<uintptr_t*>(jobs_start);
 
 		// If the name matches, return the job.
-		if (*reinterpret_cast<std::string*>(job + 0x10) == job_name)
+		if (*reinterpret_cast<std::string*>(job + 0x80) == job_name)
 			return job;
 	}
 
@@ -34,5 +34,5 @@ uintptr_t Scheduler::get_script_context() {
 		throw std::runtime_error("Couldn't find WaitingHybridScriptsJob");
 
 	// Return the script context.
-	return *reinterpret_cast<uintptr_t*>(job + 0x138);
+	return *reinterpret_cast<uintptr_t*>(job + 0x1A8);
 }
