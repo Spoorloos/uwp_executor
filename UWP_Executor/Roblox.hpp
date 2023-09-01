@@ -5,7 +5,7 @@
 
 #include "Scheduler.hpp"
 
-namespace Offsets { // Version: 2.590.678.0
+namespace Offsets { // Version: 2.592.586.0
 	// Base offsets:
 	constexpr uintptr_t get_scheduler = 0x7AAAA0;
 	constexpr uintptr_t get_state = 0x4555F0;
