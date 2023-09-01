@@ -6,7 +6,7 @@
 #include "Scheduler.hpp"
 
 namespace Offsets { // Version: 2.590.678.0
-	// Function offsets:
+	// Base offsets:
 	constexpr uintptr_t get_scheduler = 0x7AAAA0;
 	constexpr uintptr_t get_state = 0x4555F0;
 	constexpr uintptr_t luavm_load = 0x554E90;
