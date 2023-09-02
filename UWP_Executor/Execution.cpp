@@ -9,13 +9,22 @@
 
 #include "Luau/Compiler.h"
 #include "Luau/BytecodeBuilder.h"
+#include "Luau/BytecodeUtils.h"
 
 class bytecode_encoder_t : public Luau::BytecodeEncoder {
-	inline uint8_t encodeOp(uint8_t op) override {
-		return op * 227;
-	}
+	inline void encode(uint32_t* data, size_t count) override {
+		// Loop through the instructions.
+		for (auto i = 0u; i < count;) {
+			// Get opcode from instruction.
+			uint8_t op = LUAU_INSN_OP(data[i]);
 
-	inline void encode(uint32_t* data, size_t count) override {};
+			// Encode the opcode (which is the first byte).
+			data[i] = uint8_t(op * 227) | (data[i] & ~0xff);
+
+			// Add the instruction length (which could be multiple 32-bit integers).
+			i += Luau::getOpLength(LuauOpcode(op));
+		}
+	};
 };
 
 std::string compress_bytecode(std::string_view bytecode) {
