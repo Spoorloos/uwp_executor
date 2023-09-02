@@ -12,7 +12,7 @@ uintptr_t Scheduler::get_job(const char* job_name) noexcept {
 	auto jobs_start = *reinterpret_cast<uintptr_t*>(scheduler + 0x134);
 	const auto jobs_end = *reinterpret_cast<uintptr_t*>(scheduler + 0x138);
 
-	// Loop through the job pointers (each 8 bytes apart).
+	// Loop through the job pointers (each 8 bytes long as they're shared_ptrs).
 	for (; jobs_start < jobs_end; jobs_start += 8u) {
 		const auto job = *reinterpret_cast<uintptr_t*>(jobs_start);
 
