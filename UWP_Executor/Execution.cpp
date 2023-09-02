@@ -15,10 +15,10 @@ class bytecode_encoder_t : public Luau::BytecodeEncoder {
 	inline void encode(uint32_t* data, size_t count) override {
 		// Loop through the instructions.
 		for (auto i = 0u; i < count;) {
-			// Get the opcode from the instruction.
-			const auto op = uint8_t(LUAU_INSN_OP(data[i]));
+			// Get the opcode (which is the first byte of the instruction).
+			const auto op = *reinterpret_cast<uint8_t*>(data + i);
 
-			// Encode the opcode (which is the first byte of the instruction).
+			// Encode the opcode.
 			*reinterpret_cast<uint8_t*>(data + i) = op * 227;
 
 			// Add the instruction length (which could be multiple 32-bit integers).
