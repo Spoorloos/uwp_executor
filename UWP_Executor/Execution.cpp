@@ -16,7 +16,7 @@ class bytecode_encoder_t : public Luau::BytecodeEncoder {
 		// Loop through the instructions.
 		for (auto i = 0u; i < count;) {
 			// Get the opcode from the instruction.
-			uint8_t op = LUAU_INSN_OP(data[i]);
+			const auto op = uint8_t(LUAU_INSN_OP(data[i]));
 
 			// Encode the opcode (which is the first byte of the instruction).
 			data[i] = uint8_t(op * 227) | (data[i] & ~0xff);
