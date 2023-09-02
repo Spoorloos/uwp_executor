@@ -24,7 +24,7 @@ class bytecode_encoder_t : public Luau::BytecodeEncoder {
 			// Encode the opcode.
 			opcode *= 227;
 		}
-	};
+	}
 };
 
 std::string compress_bytecode(std::string_view bytecode) {
