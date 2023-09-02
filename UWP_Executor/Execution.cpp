@@ -16,13 +16,13 @@ class bytecode_encoder_t : public Luau::BytecodeEncoder {
 		// Loop through the instructions.
 		for (auto i = 0u; i < count;) {
 			// Get the opcode (which is the first byte of the instruction).
-			const auto op = *reinterpret_cast<uint8_t*>(data + i);
-
-			// Encode the opcode.
-			*reinterpret_cast<uint8_t*>(data + i) = op * 227;
+			auto& opcode = *reinterpret_cast<uint8_t*>(data + i);
 
 			// Add the instruction length (which could be multiple 32-bit integers).
-			i += Luau::getOpLength(LuauOpcode(op));
+			i += Luau::getOpLength(LuauOpcode(opcode));
+
+			// Encode the opcode.
+			opcode *= 227;
 		}
 	};
 };
