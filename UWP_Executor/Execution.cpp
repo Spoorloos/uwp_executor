@@ -66,7 +66,7 @@ void Execution::execute_bytecode(std::string_view bytecode) {
 	Roblox::set_identity(state, 8);
 	
 	// Spawn the script closure and pop it off the stack.
-	Roblox::task_spawn(state);
+	Roblox::task_defer(state);
 	Roblox::pop_stack(state, 1);
 }
 
@@ -77,7 +77,7 @@ void Execution::execute_script(const std::string& source) {
 
 	// Compile the script.
 	static auto encoder = bytecode_encoder_t();
-	const auto bytecode = Luau::compile("task.wait()\n" + source, {}, {}, &encoder);
+	const auto bytecode = Luau::compile(source, {}, {}, &encoder);
 
 	// Print out the compiler error or execute the bytecode.
 	if (bytecode[0] == '\0')
