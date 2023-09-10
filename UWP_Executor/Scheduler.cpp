@@ -13,16 +13,15 @@ uintptr_t Scheduler::get_job(const char* job_name) noexcept {
 	const auto jobs_end = *reinterpret_cast<uintptr_t*>(scheduler + 0x138);
 
 	// Loop through the job pointers (each 8 bytes long as they're shared_ptrs).
+	auto result = NULL;
 	for (; jobs_start < jobs_end; jobs_start += 8u) {
 		const auto job = *reinterpret_cast<uintptr_t*>(jobs_start);
 
-		// If the name matches, return the job.
+		// If the name matches, set return to job.
 		if (*reinterpret_cast<std::string*>(job + 0x80) == job_name)
-			return job;
+			result = job;
 	}
-
-	// Couldn't find the job, return null.
-	return NULL;
+	return result;
 }
 
 uintptr_t Scheduler::get_script_context() {
