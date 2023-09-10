@@ -61,12 +61,10 @@ void Execution::execute_bytecode(std::string_view bytecode) {
 
 	if (Roblox::luavm_load(state, &compressed, "", 0))
 		throw std::runtime_error("Unexpected error during execution.");
-
-	// Set the identity. 
-	Roblox::set_identity(state, 8);
 	
-	// Spawn the script closure and pop it off the stack.
-	Roblox::task_defer(state);
+	// Set the identity, spawn the script closure and pop it off the stack.
+	Roblox::set_identity(state, 8);
+	Roblox::task_spawn(state);
 	Roblox::pop_stack(state, 1);
 }
 
@@ -77,7 +75,7 @@ void Execution::execute_script(const std::string& source) {
 
 	// Compile the script.
 	static auto encoder = bytecode_encoder_t();
-	const auto bytecode = Luau::compile(source, {}, {}, &encoder);
+	const auto bytecode = Luau::compile("task.wait()" + source, {}, {}, &encoder);
 
 	// Print out the compiler error or execute the bytecode.
 	if (bytecode[0] == '\0')
