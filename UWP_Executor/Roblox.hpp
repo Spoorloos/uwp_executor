@@ -3,8 +3,6 @@
 #include <string>
 #include <Windows.h>
 
-#include "Scheduler.hpp"
-
 namespace Offsets { // Version: 2.592.586.0
 	// Base offsets:
 	constexpr uintptr_t get_scheduler = 0x7AAAA0;
