@@ -20,7 +20,7 @@ namespace Offsets { // Version: 2.592.586.0
 
 namespace Types {
 	using get_scheduler = uintptr_t(__cdecl*)();
-	using get_state = uintptr_t(__thiscall*)(uintptr_t script_context, uint32_t* identity, uintptr_t* script);
+	using get_state = uintptr_t(__thiscall*)(uintptr_t script_context, const uint32_t* identity, const uintptr_t* script);
 	using luavm_load = int32_t(__fastcall*)(uintptr_t state, std::string* source, const char* chunk_name, int32_t env);
 	using task_spawn = int32_t(__cdecl*)(uintptr_t state);
 	using print = int32_t(__cdecl*)(int32_t type, const char* message, ...);
@@ -38,10 +38,6 @@ namespace Roblox {
 	const auto print = reinterpret_cast<Types::print>(base + Offsets::print);
 
 	// Custom functions:
-	inline uintptr_t get_global_state(uint32_t identity, uintptr_t script = NULL) {
-		return get_state(Scheduler::get_script_context(), &identity, &script);
-	}
-
 	inline void set_identity(uintptr_t state, uint32_t identity) noexcept {
 		*reinterpret_cast<int32_t*>(*reinterpret_cast<uintptr_t*>(state + Offsets::extra_space) + Offsets::identity) = identity;
 	}
