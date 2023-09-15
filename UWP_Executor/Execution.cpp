@@ -3,6 +3,7 @@
 
 #include "Execution.hpp"
 #include "Roblox.hpp"
+#include "Scheduler.hpp"
 
 #include "zstd.h"
 #include "xxhash.h"
@@ -10,6 +11,8 @@
 #include "Luau/Compiler.h"
 #include "Luau/BytecodeBuilder.h"
 #include "Luau/BytecodeUtils.h"
+
+const uint32_t identity = 8;
 
 class bytecode_encoder_t : public Luau::BytecodeEncoder {
 	inline void encode(uint32_t* data, size_t count) override {
@@ -57,13 +60,13 @@ std::string compress_bytecode(std::string_view bytecode) {
 void Execution::execute_bytecode(std::string_view bytecode) {
 	// Compress and load the bytecode.
 	auto compressed = compress_bytecode(bytecode);
-	const auto state = Roblox::get_global_state(8);
+	const auto state = Roblox::get_state(Scheduler::get_script_context(), &identity, nullptr);
 
 	if (Roblox::luavm_load(state, &compressed, "", 0))
 		throw std::runtime_error("Unexpected error during execution.");
 	
 	// Set the identity, spawn the script closure and pop it off the stack.
-	Roblox::set_identity(state, 8);
+	Roblox::set_identity(state, identity);
 	Roblox::task_spawn(state);
 	Roblox::pop_stack(state, 1);
 }
