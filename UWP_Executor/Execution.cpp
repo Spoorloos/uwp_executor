@@ -12,7 +12,7 @@
 #include "Luau/BytecodeBuilder.h"
 #include "Luau/BytecodeUtils.h"
 
-const uint32_t identity = 8;
+const auto identity = 8u, script = 0u;
 
 class bytecode_encoder_t : public Luau::BytecodeEncoder {
 	inline void encode(uint32_t* data, size_t count) override {
@@ -37,8 +37,8 @@ std::string compress_bytecode(std::string_view bytecode) {
 	auto buffer = std::vector<char>(max_size + 8);
 
 	// Copy RSB1 and data size into the buffer.
-	memcpy(&buffer[0], "RSB1", 4u);
-	memcpy(&buffer[4], &data_size, 4u);
+	strcpy_s(&buffer[0], buffer.capacity(), "RSB1");
+	memcpy(&buffer[4], &data_size, sizeof(data_size));
 
 	// Copy compressed bytecode into the buffer.
 	const auto compressed_size = ZSTD_compress(&buffer[8], max_size, bytecode.data(), data_size, ZSTD_maxCLevel());
@@ -60,7 +60,7 @@ std::string compress_bytecode(std::string_view bytecode) {
 void Execution::execute_bytecode(std::string_view bytecode) {
 	// Compress and load the bytecode.
 	auto compressed = compress_bytecode(bytecode);
-	const auto state = Roblox::get_state(Scheduler::get_script_context(), &identity, nullptr);
+	const auto state = Roblox::get_state(Scheduler::get_script_context(), &identity, &script);
 
 	if (Roblox::luavm_load(state, &compressed, "", 0))
 		throw std::runtime_error("Unexpected error during execution.");
