@@ -12,7 +12,7 @@
 #include "Luau/BytecodeBuilder.h"
 #include "Luau/BytecodeUtils.h"
 
-const auto identity = 8u, script = 0u;
+const uint32_t identity = 8u, script = NULL;
 
 class bytecode_encoder_t : public Luau::BytecodeEncoder {
 	inline void encode(uint32_t* data, size_t count) override {
