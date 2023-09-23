@@ -38,7 +38,7 @@ std::string compress_bytecode(std::string_view bytecode) {
 
 	// Copy RSB1 and data size into the buffer.
 	strcpy_s(&buffer[0], buffer.capacity(), "RSB1");
-	memcpy(&buffer[4], &data_size, sizeof(data_size));
+	memcpy_s(&buffer[4], buffer.capacity(), &data_size, sizeof(data_size));
 
 	// Copy compressed bytecode into the buffer.
 	const auto compressed_size = ZSTD_compress(&buffer[8], max_size, bytecode.data(), data_size, ZSTD_maxCLevel());
