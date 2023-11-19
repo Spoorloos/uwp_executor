@@ -1,6 +1,6 @@
 # UWP Executor
-> As of September 2023 this is patched and unusable.
 
+> As of September 2023 this is permanently patched and unusable!
 A simple script executor for the microsoft store version of Roblox.
 
 ## Installation
