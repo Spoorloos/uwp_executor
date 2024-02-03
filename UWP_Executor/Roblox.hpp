@@ -12,8 +12,8 @@ namespace Offsets { // Version: 2.592.586.0
 	constexpr uintptr_t print = 0xD71B20;
 
 	// Other offsets:
-	constexpr int16_t top = 12/*, base = 16*/;
-	constexpr int16_t extra_space = 72, identity = 24;
+	constexpr ptrdiff_t top = 12/*, base = 16*/;
+	constexpr ptrdiff_t extra_space = 72, identity = 24;
 }
 
 namespace Types {
